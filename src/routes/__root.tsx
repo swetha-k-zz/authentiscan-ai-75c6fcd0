@@ -77,14 +77,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "VerifyLens — AI Product Authenticity Check" },
+      { name: "description", content: "Upload or capture a product photo and get an instant AI authenticity verdict with the evidence behind it." },
+      { property: "og:title", content: "VerifyLens — AI Product Authenticity Check" },
+      { property: "og:description", content: "Upload or capture a product photo and get an instant AI authenticity verdict with the evidence behind it." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
