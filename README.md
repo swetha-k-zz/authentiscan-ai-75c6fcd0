@@ -1,86 +1,220 @@
-# Brand Authenticity Scanner
+# 🔍 AuthentiScan AI
 
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
-import os
-import logging
+## AI-Powered Product Authenticity Verification System
 
-from app.config import settings
-from app.database import init_db, seed_demo_products
-from app.routes import health, products, analysis, demo
+AuthentiScan AI is an AI-powered product verification system designed to help users identify potentially counterfeit products by analyzing product images and generating an evidence-based authenticity assessment.
 
-# Setup logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+Users can upload or capture an image of a product, and the system analyzes visual and product-related information to determine whether the item appears **Likely Authentic, Suspicious, or Unclear**.
 
-# Initialize FastAPI App
-app = FastAPI(
-    title=settings.PROJECT_NAME,
-    description=settings.TAGLINE,
-    version="1.0.0",
-    docs_url="/docs",
-    redoc_url="/redoc"
-)
+> ⚠️ AuthentiScan AI provides AI-based guidance and is not an official brand authentication service.
 
-# Configure CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+---
 
-# Startup Event: Initialize DB and seed demo products
-@app.on_event("startup")
-def on_startup():
-    logger.info("Initializing SQLite database & tables...")
-    init_db()
-    logger.info("Seeding reference products...")
-    seed_demo_products()
-    logger.info("Backend startup complete.")
+## 🚀 Live Demo
 
-# Include API Routers
-app.include_router(health.router, prefix=settings.API_V1_STR)
-app.include_router(products.router, prefix=settings.API_V1_STR)
-app.include_router(analysis.router, prefix=settings.API_V1_STR)
-app.include_router(demo.router, prefix=settings.API_V1_STR)
+https://authentiscan-ai.lovable.app
 
-# Root Endpoint
-@app.get("/")
-def root():
-    return {
-        "project": settings.PROJECT_NAME,
-        "tagline": settings.TAGLINE,
-        "docs": "/docs",
-        "health": f"{settings.API_V1_STR}/health"
-    }
+---
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
-,Build this with professional frontend and this will work like an ,when we upload an image of an product it need to analyse and tell the whether the product is original from the brand or fake
+## 📌 Problem Statement
 
-This project was built with [Lovable](https://lovable.dev).
+Counterfeit products are becoming increasingly difficult to distinguish from genuine products. Fake products can closely imitate packaging, logos, labels, typography, materials, QR codes, barcodes, and other visual characteristics of genuine products.
 
-**Live app**: https://authentiscan-ai.lovable.app
+Traditional verification methods can be time-consuming and may require expert knowledge. AuthentiScan AI aims to provide users with an accessible first-level verification tool using artificial intelligence and image analysis.
 
-## Build with Lovable
+---
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/10603931-5d61-4e31-b6b2-2e01ffe4232b).
+## 💡 Our Solution
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+AuthentiScan AI analyzes a product image from multiple perspectives rather than relying only on its overall appearance.
 
-## Development
+The system examines available visual and product information and uses AI-based analysis to identify possible inconsistencies that may indicate a counterfeit product.
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+The result is presented as an evidence-based assessment to help users understand why a product may appear authentic, suspicious, or unclear.
 
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
-```
+---
+
+## ✨ Key Features
+
+- 📷 Upload a product image
+- 📸 Capture a product image using a camera
+- 🤖 AI-powered product analysis
+- 🔍 Visual inspection of product details
+- 🏷️ Brand and label analysis
+- 📝 Product text and packaging analysis
+- 📊 Evidence-based authenticity assessment
+- ⚠️ Suspicious-product risk identification
+- 📋 Explainable verification results
+- 📈 Confidence/risk assessment
+- 🔄 Real-time scanning experience
+
+---
+
+##  How It Works
+
+The verification process follows a multi-stage approach:
+
+```text
+                Product Image
+                      │
+                      ▼
+              Image Processing
+                      │
+                      ▼
+             Visual Inspection
+                      │
+              ┌───────┼───────┐
+              ▼       ▼       ▼
+            Logo    Labels   Packaging
+              │       │       │
+              └───────┼───────┘
+                      ▼
+               AI-Based Analysis
+                      │
+                      ▼
+              Evidence Evaluation
+                      │
+                      ▼
+            Verification Assessment
+                      │
+          ┌───────────┼───────────┐
+          ▼           ▼           ▼
+     Likely        Suspicious    Unclear
+     Authentic
+What the System Analyzes
+
+Depending on the available product image and information, AuthentiScan AI can examine characteristics such as:
+
+Logo geometry
+Typography
+Product labels
+Packaging details
+Stitching and finishing
+Materials and visible texture
+Brand-specific visual characteristics
+Product information
+Other visible inconsistencies
+
+The system combines these signals to produce a more explainable assessment
+
+ Verification Results
+
+🟢 Likely Authentic
+
+The available evidence appears generally consistent with the expected characteristics of the selected product or brand.
+
+🟠 Suspicious
+
+One or more characteristics show potential inconsistencies that may indicate that the product could be counterfeit.
+
+⚪ Unclear
+
+The available image or evidence is insufficient to make a reliable assessment.
+
+System Architecture
+                         USER
+                           │
+                           ▼
+                  Product Image Upload
+                           │
+                           ▼
+                   Frontend Interface
+                           │
+                           ▼
+                    Backend API
+                           │
+             ┌─────────────┼─────────────┐
+             ▼             ▼             ▼
+       Image Analysis     OCR       QR / Barcode
+             │             │             │
+             └─────────────┼─────────────┘
+                           ▼
+                  Reference Product Data
+                           │
+                           ▼
+                    AI Evaluation
+                           │
+                           ▼
+                 Evidence-Based Result
+                           │
+                           ▼
+              Authenticity / Risk Report
+ Technology Stack
+Frontend
+React
+TypeScript
+Vite
+Tailwind CSS
+Backend
+Python
+FastAPI
+AI & Analysis
+Computer Vision
+OCR
+Product Image Analysis
+AI-based Evidence Evaluation
+Database
+SQLite
+Development
+Lovable
+GitHub
+
+Project Structure
+
+authentiscan-ai/
+│
+├── public/
+│
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── services/
+│   └── ...
+│
+├── backend/
+│   ├── app/
+│   │   ├── main.py
+│   │   ├── config.py
+│   │   ├── database.py
+│   │   └── routes/
+│   │
+│   └── requirements.txt
+│
+├── .gitignore
+├── README.md
+├── package.json
+├── vite.config.ts
+└── tsconfig.json
+
+Project Objective
+
+The main objective of AuthentiScan AI is to make preliminary product authenticity verification more accessible.
+
+Instead of relying solely on visual judgment, the system attempts to evaluate multiple product characteristics and provide users with an understandable assessment supported by evidence.
+Potential Applications
+
+AuthentiScan AI can potentially assist with preliminary verification of products such as:
+
+Fashion products
+Luxury goods
+Cosmetics
+Electronics
+Accessories
+Branded consumer products
+Other products where visual authenticity indicators are available
+🔗 Links
+🌐 Live Application
+
+https://authentiscan-ai.lovable.app
+
+💻 GitHub Repository
+
+https://github.com/swetha-k-zz/authentiscan-ai-75c6fcd0
+Project
+
+AuthentiScan AI
+
+An AI-powered approach to preliminary product authenticity verification.
+Built With
+
+Built using modern web technologies, artificial intelligence, and image analysis to create a simple and accessible product verification experience.
